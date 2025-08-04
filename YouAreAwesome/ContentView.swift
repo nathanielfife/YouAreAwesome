@@ -9,41 +9,34 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var message = ""
-    @State private var image = ""
+    @State private var imageName = ""
     var body: some View {
         
         VStack {
             
             Spacer()
             
-            Image(systemName: image)
+            Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .foregroundStyle(.orange)
+                .clipShape(RoundedRectangle(cornerRadius: 50))
+                .shadow(radius: 50)
             
             Text(message)
                 .font(.largeTitle)
-                .fontWeight(.ultraLight)
+                .fontWeight(.heavy)
+                .foregroundStyle(.red)
             Spacer()
             
             Button("Press Me!") {
-                let message1 = "You are Awesome!"
-                let message2 = "You are Great!"
-                let imageString1 = "sun.max.fill"
-                let imageString2 = "hand.thumbsup"
+                let message0 = "You are Awesome!"
+                let message1 = "You are Great!"
                 
-                if image == imageString2 {
-                    image = imageString1
-                    message = message1
-                } else {
-                    image = imageString2
-                    message = message2
-                }
+                imageName = (imageName == "image0" ? "image1" : "image0")
+                message = (message == message0 ? message1 : message0)
             }
             .buttonStyle(.borderedProminent)
             .font(.title2)
-            .tint(.orange)
-            
         }
         .padding()
         
