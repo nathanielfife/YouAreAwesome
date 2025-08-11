@@ -10,36 +10,33 @@ import SwiftUI
 struct ContentView: View {
     @State private var message = ""
     @State private var imageName = ""
-    @State private var imageNumber = 0
-    @State private var messages = ["Never let go of the goodness!" , "You Are Awesome!" , "Don't forget that your amazing!", "Good job!" , "There is always a reason to smile!", "You are a child of God!" , "You are terrific!", "Don't worry, America has got your back!" , "How cool are you? SO COOL!", "You Are Great!"]
     var body: some View {
         
         VStack {
+            Text(message)
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .foregroundStyle(.red)
+                .multilineTextAlignment(.center)
+                .frame(height: 120)
+                .minimumScaleFactor(0.5)
+                .animation(.easeInOut(duration: 0.10), value: message)
             
-            Spacer()
             
             Image(imageName)
                 .resizable()
                 .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 50))
                 .shadow(radius: 50)
+                .animation(.default, value: imageName)
             
-            Text(message)
-                .font(.largeTitle)
-                .fontWeight(.heavy)
-                .foregroundStyle(.red)
-                .multilineTextAlignment(.center)
+         
             Spacer()
             
             Button("Show Message") {
-                
-                message = messages[(imageNumber)]
-                imageName = "image\(imageNumber)"
-                imageNumber += 1
-                
-                if imageNumber > 9 {
-                    imageNumber = 0
-                }
+                let messageList = ["Never let go of the goodness!" , "Adda Boy!", "You Are Awesome!" , "Don't forget that your amazing!", "Good job!" , "There is always a reason to smile!", "You are a child of God!" , "You are terrific!"]
+                message = messageList[Int.random(in: 0...messageList.count - 1)]
+                imageName = "image\(Int.random(in: 0...9))"
             }
             .buttonStyle(.borderedProminent)
             .font(.title2)
