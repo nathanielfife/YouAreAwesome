@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var lastMessageNumber : Int = -1 // last messageNuber will never be -1
     @State private var lastSoundNumber : Int = -1
     @State private var audioPlayer: AVAudioPlayer!
+    @State private var soundIsOn = true
     let numberOfSounds = 5
     let numberOfImages = 10 // images labed image0 - image9
     
@@ -41,21 +42,41 @@ struct ContentView: View {
             
             Spacer()
             
-            Button("Show Message") {
-                let messageList = ["Never let go of the goodness!" , "Adda Boy!", "You Are Awesome!" , "Don't forget that your amazing!", "Good job!" , "There is always a reason to smile!", "You are a child of God!" , "You are terrific!"]
-
-               lastMessageNumber = (nonRepeatingRandom(lastNumber: lastMessageNumber, upperBonds: messageList.count))
-                message = messageList[lastMessageNumber]
- 
-                lastImageNumber = (nonRepeatingRandom(lastNumber: lastImageNumber, upperBonds: numberOfImages))
-                imageName = "image\(lastImageNumber)"
+            HStack {
+                Text("Sound On:")
+                Toggle("", isOn: $soundIsOn)
+                    .labelsHidden()
+                    .onChange(of: soundIsOn) {
+                        if audioPlayer != nil {
+                            if audioPlayer.isPlaying {
+                                audioPlayer.stop()
+                            }
+                        }
+                        
+                        
+                    }
                 
-                lastSoundNumber = (nonRepeatingRandom(lastNumber: lastSoundNumber, upperBonds: numberOfSounds))
-                playSound(soundName: "sound\(lastSoundNumber)")
+                Spacer()
                 
+                Button("Show Message") {
+                    let messageList = ["Never let go of the goodness!" , "Adda Boy!", "You Are Awesome!" , "Don't forget that your amazing!", "Good job!" , "There is always a reason to smile!", "You are a child of God!" , "You are terrific!"]
+                    
+                    lastMessageNumber = (nonRepeatingRandom(lastNumber: lastMessageNumber, upperBonds: messageList.count))
+                    message = messageList[lastMessageNumber]
+                    
+                    lastImageNumber = (nonRepeatingRandom(lastNumber: lastImageNumber, upperBonds: numberOfImages))
+                    imageName = "image\(lastImageNumber)"
+                    
+                    lastSoundNumber = (nonRepeatingRandom(lastNumber: lastSoundNumber, upperBonds: numberOfSounds))
+                    if soundIsOn {
+                        if soundIsOn {
+                            playSound(soundName: "sound\(lastSoundNumber)")
+                        }
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .font(.title2)
             }
-            .buttonStyle(.borderedProminent)
-            .font(.title2)
         }
         .padding()
         
@@ -86,4 +107,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
 
